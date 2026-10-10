@@ -1,0 +1,9 @@
+/node_modules/
+/validation/
+/exports/
+/_site/
+/README.md
+
+# Keep required website media even when a parent repository ignores binaries.
+!/assets/videos/**/*.mp4
+!/assets/models/*.glb

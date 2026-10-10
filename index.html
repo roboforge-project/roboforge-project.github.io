@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RoboForge: agentic robot creation through generation, verification, and revision. Explore robot designs, learned behaviors, and execution-grounded refinement.">
+  <meta name="theme-color" content="#202322">
+  <meta name="robots" content="noindex, nofollow">
+  <title>RoboForge — Generation, Verification &amp; Revision</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+  <script type="module" src="robot-model.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero" id="top">
+    <div class="hero-viewport"><video id="hero-video" class="hero-video" muted loop playsinline preload="metadata" poster="assets/posters/hero.webp" aria-label="A montage of learned behaviors on four simulated robots"></video></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-top">
+      <a class="wordmark" href="#top">RoboForge</a>
+      <nav class="toc" aria-label="On this page"><a href="#abstract">Abstract</a><a href="#method">Method</a><a href="#skills">Demos</a><a href="#refinement">Motion refinement</a><a href="#hardware">Real world</a></nav>
+    </div>
+    <div class="hero-content">
+      <h1>RoboForge</h1>
+      <p class="hero-subtitle">Agentic Robot Creation through<br>Generation, Verification, and Revision</p>
+      <div class="hero-credits">
+        <p class="hero-authors"><span>Xuebing Li<sup>1</sup></span><span>Yibo He<sup>1</sup></span><span>Sitong Liu<sup>1</sup></span><span>Ran Ji<sup>1</sup></span><span>Jiayuan Gu<sup>1</sup></span></p>
+        <p class="hero-affiliations"><sup>1</sup> ShanghaiTech University</p>
+      </div>
+    </div>
+    <div class="hero-bottom"><span class="hero-caption">Learned behaviors across four embodiments<br><span>Simulation · original playback speed</span></span><a class="hero-scroll" href="#abstract">Discover the project <span aria-hidden="true">↓</span></a><button type="button" id="hero-toggle" aria-label="Pause highlight video" aria-pressed="false">Pause Ⅱ</button></div>
+  </header>
+
+  <main id="main" class="container">
+    <section id="abstract" class="section abstract-section">
+      <div class="section-heading"><h2>Abstract</h2></div>
+      <div class="abstract-copy">
+        <p><strong>Can an AI agent turn high-level user intent into a functioning robot and teach it how to behave?</strong> We study this question from two complementary aspects: embodiment and behavior creation. For embodiment creation, we investigate how well current multimodal models capture mechanical requirements, and introduce <strong>computational metrics for evaluating generated designs</strong> before fabrication.</p>
+        <p>For behavior creation, we present <strong>RoboForge</strong>, an agentic framework that turns task specifications into executable policies through motion generation, policy learning, and execution-grounded revision. Given a robot embodiment and task, the agent generates a reference motion, configures the learning objective, and trains a policy. Crucially, motion remains in the loop: rollout feedback can revise the reference motion, reward, or both. We evaluate a generated embodiment across multiple MLLMs and behavior creation across four diverse robots against reward-refinement and one-shot motion baselines. Our computational metrics expose recurring mechanical failures in generated designs, while behavior experiments show that execution-grounded refinement improves task-level behavior and execution quality. Finally, we fabricate an agent-generated Gorilla and directly deploy learned behaviors on the physical robot.</p>
+      </div>
+    </section>
+
+    <section id="method" class="section" aria-labelledby="embodiment-title">
+      <article class="method-part" id="embodiment">
+        <h2 id="embodiment-title">Evaluating generated robot designs</h2>
+        <p class="section-intro">A reference image, target tasks, and real actuator assets guide multimodal models to generate <strong>part geometry, an assembled robot, and a simulation model.</strong> We examine the resulting designs through a Gorilla case study.</p>
+        <figure class="design-example">
+          <div class="design-example-block">
+            <div class="design-input">
+              <h3>Reference image &amp; tasks</h3>
+              <img src="assets/images/ref-image.png" alt="Reference appearance of a Gorilla-inspired robot with long arms and hand-and-foot support" loading="lazy" width="1200" height="1202">
+              <dl class="design-tasks">
+                <div><dt>Walking</dt><dd>Walk forward using both hands and feet.</dd></div>
+                <div><dt>Hand waving</dt><dd>Raise one hand and wave it forward, then place it back on the ground.</dd></div>
+              </dl>
+            </div>
+            <div class="design-output">
+              <h3>Generated robot</h3>
+              <model-viewer id="robot-model" src="assets/models/gorilla.glb" poster="assets/images/gorilla-model-poster.png" alt="Interactive 3D model of a generated eight-joint Gorilla robot" camera-controls touch-action="pan-y" loading="lazy" orientation="0deg -90deg 0deg" camera-orbit="55deg 75deg 105%" shadow-intensity="0.6" environment-image="neutral" interaction-prompt="none">
+                <p id="model-status" class="model-status" slot="progress-bar" role="status">Loading 3D model…</p>
+              </model-viewer>
+              <div class="model-controls"><span class="caption">Drag to rotate · scroll or pinch to zoom</span><button id="model-reset" class="text-button" type="button" disabled>Reset view</button></div>
+            </div>
+          </div>
+          <figcaption><strong>Left:</strong> A reference image generated by GPT-6 Astra and the target tasks. <strong>Right:</strong> The generated Gorilla assembly, including its structure and actuators.</figcaption>
+        </figure>
+        <div class="design-metrics">
+          <p><strong>Reveal mechanical failures before fabrication.</strong> Our computational metrics examine three aspects of a generated design:</p>
+          <ul class="metric-definitions">
+            <li><strong>Design &amp; assembly.</strong> Part validity, printability, interface fit, assembly access, and interference.</li>
+            <li><strong>Mechanics &amp; actuation.</strong> Structural margins, load paths, fasteners, joint limits, and cable routing.</li>
+            <li><strong>Motion &amp; task execution.</strong> Collision-free motion, tracking quality, actuator demands, and clearance.</li>
+          </ul>
+        </div>
+        <figure class="design-figure"><img src="assets/images/robot-design.webp" alt="Gorilla designs generated by GPT6 Astra, GPT5.6 Sol, GPT 5.5, and GPT5.6 Terra, from left to right, with mounting-hole and component-interference inspections" loading="lazy" width="1326" height="538"><figcaption>Generated by <strong>GPT-6 Astra</strong>, <strong>GPT-5.6 Sol</strong>, <strong>GPT-5.5</strong>, and <strong>GPT-5.6 Terra</strong> (left to right). Close-ups inspect mounting interfaces and expose component interference.</figcaption></figure>
+      </article>
+      <article class="method-part" id="roboforge-method">
+        <h2>RoboForge: motion in the learning loop</h2>
+        <p class="section-intro">Given a robot model and a task description, RoboForge first <strong>generates and verifies a reference motion</strong>. The agent plans body and limb trajectories, solves the remaining joint motion with inverse kinematics, and checks joint limits, self-collision, and task consistency. It then configures a reference-guided reward and uses reinforcement learning to <strong>train a policy</strong>.</p>
+        <p class="section-intro">RoboForge keeps <strong>motion in the loop</strong>. The agent evaluates policy rollouts against task semantics and general execution criteria, including balance, stable support, and motion quality. When a policy falls short, it checks whether the reference motion is suitable for the task and whether the reward provides effective learning guidance. It then revises the motion, reward, or both before continuing policy learning. Crucially, <strong>execution feedback can revise the reference motion itself</strong>, allowing RoboForge to improve the behavior the policy is asked to learn while preserving the robot and task.</p>
+        <figure class="method-figure"><img src="assets/images/method-overview.webp" alt="RoboForge framework: a robot and task enter reference-motion planning and review, policy learning, and a feedback loop that revises motion or reward." loading="lazy" width="1332" height="972"><figcaption>Generate a reference, learn a policy, inspect execution, and revise.</figcaption></figure>
+      </article>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-heading"><h2>Diverse Robot Behaviors</h2></div>
+      <p class="section-intro centered">Across 19 natural-language tasks and four robot embodiments, RoboForge learns a wide range of locomotion, stylized behaviors, and whole-body skills. Compared with baseline methods, it produces <strong>behaviors that better match task intent</strong>, with <strong>more stable support and smoother motion</strong>.</p>
+      <div id="robot-tabs" class="robot-tabs" role="tablist" aria-label="Choose a robot"></div>
+      <div id="robot-comparisons"><p class="loading-message">Loading the demonstrations…</p></div>
+      <p class="load-error" id="data-error" role="alert" hidden></p>
+    </section>
+
+    <section id="refinement" class="section">
+      <div class="section-heading"><h2>Refining the Generated Motion</h2></div>
+      <p class="section-intro">RoboForge keeps <strong>motion in the learning loop</strong>: policy execution feedback can reshape <strong>the reference motion itself</strong>. A motion may satisfy the task description and pass kinematic checks yet remain difficult for the robot to execute. When a policy falls short of task semantics or execution criteria such as balance, stable support, and motion quality, the agent examines both the reference motion and the reward to diagnose the difficulty.</p>
+      <p class="section-intro">The agent can revise posture, limb trajectories, timing, and support coordination to address the diagnosed difficulty, preserving task semantics and parts of the behavior that already work. The revised motion, together with any needed reward changes, guides the next round of policy learning toward a more learnable realization. This lets RoboForge <strong>improve how the task is realized while preserving what the task requires</strong>.</p>
+      <div id="refinement-rows"></div>
+    </section>
+
+    <section id="hardware" class="section hardware-section">
+      <div class="section-heading"><h2>Real-World Demonstrations</h2></div>
+      <p class="section-intro">We <strong>directly deploy</strong> RoboForge’s simulation-trained walking and hand-waving policies on our 3D-printed, eight-DoF Gorilla. The robot performs both tasks with coordinated motion and stable support, demonstrating <strong>effective transfer from simulation to real-world execution</strong>.</p>
+      <div class="hardware-overview"><figure class="hardware-portrait"><img src="assets/images/hardware-gorilla.webp" alt="The assembled, 3D-printed Gorilla robot with its physical actuators and structure" loading="lazy" width="1244" height="916"><figcaption>Assembled eight-DoF Gorilla</figcaption></figure></div>
+      <div class="two-video-grid hardware-videos">
+        <article class="video-card"><h3 class="video-card-header">Walking</h3><div class="video-frame hardware-walk"><video src="assets/videos/hardware/walk.mp4" poster="assets/posters/hardware-walk.webp" aria-label="Walking policy on the physical Gorilla" controls muted playsinline loop preload="none"></video></div><p class="task-prompt">Task: Walk forward using both hands and feet.</p></article>
+        <article class="video-card"><h3 class="video-card-header">Hand waving</h3><div class="video-frame hardware-wave"><video src="assets/videos/hardware/wave.mp4" poster="assets/posters/hardware-wave.webp" aria-label="Hand-waving policy on the physical Gorilla" controls muted playsinline loop preload="none"></video></div><p class="task-prompt">Task: Raise one hand and wave it forward, then place it back on the ground.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><p>RoboForge · ShanghaiTech University</p><a class="text-button" href="#top">Back to top ↑</a></footer>
+  <dialog id="video-modal" data-testid="video-modal" aria-labelledby="modal-title"><div class="modal-header"><div><span class="eyebrow" id="modal-robot"></span><h2 id="modal-title"></h2></div><button type="button" class="icon-button" id="video-close" data-testid="video-close" aria-label="Close video">×</button></div><div class="modal-media" id="modal-media"></div><p id="modal-prompt"></p><span class="caption">Final learned policy · simulation · original speed</span></dialog>
+  <noscript><div class="noscript-note">Enable JavaScript to browse and compare the video demonstrations. The method, design figures, and hardware photographs remain available below.</div></noscript>
+</body>
+</html>

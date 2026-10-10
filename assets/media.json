@@ -1,0 +1,263 @@
+{
+  "robots": [
+    {
+      "id": "go2",
+      "label": "Go2"
+    },
+    {
+      "id": "microduck",
+      "label": "Microduck"
+    },
+    {
+      "id": "ostrich",
+      "label": "Ostrich"
+    },
+    {
+      "id": "gorilla",
+      "label": "Gorilla"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "bend",
+      "robot": "go2",
+      "label": "Bow",
+      "prompt": "Extend both front legs and lower the chest toward the ground, keeping the hindquarters raised. Sway gently, then return to standing.",
+      "category": "expressive",
+      "methods": {
+        "eureka": {
+          "src": "assets/videos/go2/bend/eureka.mp4",
+          "poster": "assets/posters/go2-bend-eureka.webp",
+          "preview": {
+            "src": "assets/videos/go2/bend/framed/eureka.mp4",
+            "poster": "assets/posters/framed/go2/bend/eureka.webp"
+          }
+        },
+        "gpt": {
+          "src": "assets/videos/go2/bend/gpt.mp4",
+          "poster": "assets/posters/go2-bend-gpt.webp",
+          "preview": {
+            "src": "assets/videos/go2/bend/framed/gpt.mp4",
+            "poster": "assets/posters/framed/go2/bend/gpt.webp"
+          }
+        },
+        "oneshot": {
+          "src": "assets/videos/go2/bend/oneshot.mp4",
+          "poster": "assets/posters/go2-bend-oneshot.webp",
+          "preview": {
+            "src": "assets/videos/go2/bend/framed/oneshot.mp4",
+            "poster": "assets/posters/framed/go2/bend/oneshot.webp"
+          }
+        },
+        "ours": {
+          "src": "assets/videos/go2/bend/ours.mp4",
+          "poster": "assets/posters/go2-bend.webp",
+          "preview": {
+            "src": "assets/videos/go2/bend/framed/ours.mp4",
+            "poster": "assets/posters/framed/go2/bend/ours.webp"
+          }
+        }
+      }
+    },
+    {
+      "id": "walk_lie",
+      "robot": "go2",
+      "label": "Lie-walk",
+      "prompt": "Walk forward slowly in a low crouch with small, careful steps.",
+      "category": "locomotion",
+      "methods": {
+        "eureka": {
+          "src": "assets/videos/go2/walk_lie/eureka.mp4",
+          "poster": "assets/posters/go2-walk_lie-eureka.webp"
+        },
+        "gpt": {
+          "src": "assets/videos/go2/walk_lie/gpt.mp4",
+          "poster": "assets/posters/go2-walk_lie-gpt.webp"
+        },
+        "oneshot": {
+          "src": "assets/videos/go2/walk_lie/oneshot.mp4",
+          "poster": "assets/posters/go2-walk_lie-oneshot.webp"
+        },
+        "ours": {
+          "src": "assets/videos/go2/walk_lie/ours.mp4",
+          "poster": "assets/posters/go2-walk_lie.webp"
+        }
+      },
+      "references": {
+        "initial": {
+          "src": "assets/videos/go2/walk_lie/reference-initial.mp4",
+          "poster": "assets/posters/go2-walk_lie-reference-initial.webp",
+          "label": "Initial reference · trial 1",
+          "trial": 1,
+          "stage": "First reference used for training",
+          "preview": {
+            "src": "assets/videos/go2/walk_lie/framed/reference-initial.mp4",
+            "poster": "assets/posters/framed/go2/walk_lie/reference-initial.webp"
+          }
+        },
+        "final": {
+          "src": "assets/videos/go2/walk_lie/reference-final.mp4",
+          "poster": "assets/posters/go2-walk_lie-reference-final.webp",
+          "label": "Final reference · trial 3",
+          "trial": 3,
+          "stage": "Final reference used by the selected policy",
+          "preview": {
+            "src": "assets/videos/go2/walk_lie/framed/reference-final.mp4",
+            "poster": "assets/posters/framed/go2/walk_lie/reference-final.webp"
+          }
+        }
+      }
+    },
+    {
+      "id": "microduck_curious_look",
+      "robot": "microduck",
+      "label": "Look around",
+      "prompt": "Stand on both feet, turn the head to look left and right, then face forward again.",
+      "category": "expressive",
+      "methods": {
+        "eureka": {
+          "src": "assets/videos/microduck/microduck_curious_look/eureka.mp4",
+          "poster": "assets/posters/microduck-microduck_curious_look-eureka.webp",
+          "preview": {
+            "src": "assets/videos/microduck/microduck_curious_look/framed/eureka.mp4",
+            "poster": "assets/posters/framed/microduck/microduck_curious_look/eureka.webp"
+          }
+        },
+        "gpt": {
+          "src": "assets/videos/microduck/microduck_curious_look/gpt.mp4",
+          "poster": "assets/posters/microduck-microduck_curious_look-gpt.webp",
+          "preview": {
+            "src": "assets/videos/microduck/microduck_curious_look/framed/gpt.mp4",
+            "poster": "assets/posters/framed/microduck/microduck_curious_look/gpt.webp"
+          }
+        },
+        "oneshot": {
+          "src": "assets/videos/microduck/microduck_curious_look/oneshot.mp4",
+          "poster": "assets/posters/microduck-microduck_curious_look-oneshot.webp",
+          "preview": {
+            "src": "assets/videos/microduck/microduck_curious_look/framed/oneshot.mp4",
+            "poster": "assets/posters/framed/microduck/microduck_curious_look/oneshot.webp"
+          }
+        },
+        "ours": {
+          "src": "assets/videos/microduck/microduck_curious_look/ours.mp4",
+          "poster": "assets/posters/microduck-microduck_curious_look.webp",
+          "preview": {
+            "src": "assets/videos/microduck/microduck_curious_look/framed/ours.mp4",
+            "poster": "assets/posters/framed/microduck/microduck_curious_look/ours.webp"
+          }
+        }
+      }
+    },
+    {
+      "id": "ostrich_walk_happy",
+      "robot": "ostrich",
+      "label": "Happy walk",
+      "prompt": "Walk forward happily with lively steps and a gently bobbing head.",
+      "category": "locomotion",
+      "methods": {
+        "eureka": {
+          "src": "assets/videos/ostrich/ostrich_walk_happy/eureka.mp4",
+          "poster": "assets/posters/ostrich-ostrich_walk_happy-eureka.webp",
+          "preview": {
+            "src": "assets/videos/ostrich/ostrich_walk_happy/framed/eureka.mp4",
+            "poster": "assets/posters/framed/ostrich/ostrich_walk_happy/eureka.webp"
+          }
+        },
+        "gpt": {
+          "src": "assets/videos/ostrich/ostrich_walk_happy/gpt.mp4",
+          "poster": "assets/posters/ostrich-ostrich_walk_happy-gpt.webp",
+          "preview": {
+            "src": "assets/videos/ostrich/ostrich_walk_happy/framed/gpt.mp4",
+            "poster": "assets/posters/framed/ostrich/ostrich_walk_happy/gpt.webp"
+          }
+        },
+        "oneshot": {
+          "src": "assets/videos/ostrich/ostrich_walk_happy/oneshot.mp4",
+          "poster": "assets/posters/ostrich-ostrich_walk_happy-oneshot.webp",
+          "preview": {
+            "src": "assets/videos/ostrich/ostrich_walk_happy/framed/oneshot.mp4",
+            "poster": "assets/posters/framed/ostrich/ostrich_walk_happy/oneshot.webp"
+          }
+        },
+        "ours": {
+          "src": "assets/videos/ostrich/ostrich_walk_happy/ours.mp4",
+          "poster": "assets/posters/ostrich-ostrich_walk_happy.webp",
+          "preview": {
+            "src": "assets/videos/ostrich/ostrich_walk_happy/framed/ours.mp4",
+            "poster": "assets/posters/framed/ostrich/ostrich_walk_happy/ours.webp"
+          }
+        }
+      }
+    },
+    {
+      "id": "gorilla_handstand",
+      "robot": "gorilla",
+      "label": "Handstand",
+      "prompt": "The gorilla lifts both feet into a handstand, with its feet above its torso, then lowers them back to the starting position.",
+      "category": "expressive",
+      "methods": {
+        "gpt": {
+          "src": "assets/videos/gorilla/gorilla_handstand/gpt.mp4",
+          "poster": "assets/posters/gorilla-gorilla_handstand-gpt.webp",
+          "preview": {
+            "src": "assets/videos/gorilla/gorilla_handstand/framed/gpt.mp4",
+            "poster": "assets/posters/framed/gorilla/gorilla_handstand/gpt.webp"
+          }
+        },
+        "eureka": {
+          "src": "assets/videos/gorilla/gorilla_handstand/eureka.mp4",
+          "poster": "assets/posters/gorilla-gorilla_handstand-eureka.webp",
+          "preview": {
+            "src": "assets/videos/gorilla/gorilla_handstand/framed/eureka.mp4",
+            "poster": "assets/posters/framed/gorilla/gorilla_handstand/eureka.webp"
+          }
+        },
+        "oneshot": {
+          "src": "assets/videos/gorilla/gorilla_handstand/oneshot.mp4",
+          "poster": "assets/posters/gorilla-gorilla_handstand-oneshot.webp",
+          "preview": {
+            "src": "assets/videos/gorilla/gorilla_handstand/framed/oneshot.mp4",
+            "poster": "assets/posters/framed/gorilla/gorilla_handstand/oneshot.webp"
+          }
+        },
+        "ours": {
+          "src": "assets/videos/gorilla/gorilla_handstand/ours.mp4",
+          "poster": "assets/posters/gorilla-gorilla_handstand.webp",
+          "preview": {
+            "src": "assets/videos/gorilla/gorilla_handstand/framed/ours.mp4",
+            "poster": "assets/posters/framed/gorilla/gorilla_handstand/ours.webp"
+          }
+        }
+      },
+      "references": {
+        "initial": {
+          "src": "assets/videos/gorilla/gorilla_handstand/reference-initial.mp4",
+          "poster": "assets/posters/gorilla-gorilla_handstand-reference-initial.webp",
+          "label": "Initial reference · trial 1",
+          "trial": 1,
+          "stage": "First reference used for training",
+          "preview": {
+            "src": "assets/videos/gorilla/gorilla_handstand/framed/reference-initial.mp4",
+            "poster": "assets/posters/framed/gorilla/gorilla_handstand/reference-initial.webp"
+          }
+        },
+        "final": {
+          "src": "assets/videos/gorilla/gorilla_handstand/reference-final.mp4",
+          "poster": "assets/posters/gorilla-gorilla_handstand-reference-final.webp",
+          "label": "Final reference · trial 3",
+          "trial": 3,
+          "stage": "Final reference used by the selected policy",
+          "preview": {
+            "src": "assets/videos/gorilla/gorilla_handstand/framed/reference-final.mp4",
+            "poster": "assets/posters/framed/gorilla/gorilla_handstand/reference-final.webp"
+          }
+        }
+      }
+    }
+  ],
+  "hero": {
+    "src": "assets/videos/hero.mp4",
+    "poster": "assets/posters/hero.webp"
+  }
+}
