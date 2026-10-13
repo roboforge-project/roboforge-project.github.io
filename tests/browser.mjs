@@ -95,7 +95,7 @@ async function checkStaticDemos(origin) {
   watchPage(page, origin);
   await page.goto(origin, { waitUntil: 'domcontentloaded' });
   const manifest = await (await page.request.get(`${origin}/assets/media.json`)).json();
-  assert.equal(await page.title(), 'Agentic Robot Creation through Generation, Verification, and Revision | RoboForge');
+  assert.equal(await page.title(), 'RoboForge — Generation, Verification & Revision');
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), 'https://roboforge-project.github.io/');
   const site = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
   assert.equal(site['@type'], 'WebSite');
