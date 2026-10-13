@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "render:demos": "node scripts/render-demos.mjs",
+    "check:demos": "node scripts/render-demos.mjs --check",
     "dev": "python3 -m http.server 8080 --bind 127.0.0.1",
-    "test": "node tests/browser.mjs"
+    "test": "node scripts/render-demos.mjs --check && node tests/browser.mjs"
   },
   "engines": {
     "node": ">=20"

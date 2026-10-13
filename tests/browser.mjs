@@ -90,6 +90,42 @@ async function checkHero(page) {
   assert(dimensions.paused, 'Reduced-motion visitors should see a paused hero');
 }
 
+async function checkStaticDemos(origin) {
+  const page = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  watchPage(page, origin);
+  await page.goto(origin, { waitUntil: 'domcontentloaded' });
+  const manifest = await (await page.request.get(`${origin}/assets/media.json`)).json();
+  assert.equal(await page.title(), 'Agentic Robot Creation through Generation, Verification, and Revision | RoboForge');
+  assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), 'https://roboforge-project.github.io/');
+  const site = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
+  assert.equal(site['@type'], 'WebSite');
+  assert.equal(site.name, 'RoboForge');
+  assert.equal(site.url, 'https://roboforge-project.github.io/');
+  assert.equal(await page.locator('#hero-video').getAttribute('src'), manifest.hero.src);
+  assert.equal(await page.locator('#robot-tabs').isVisible(), false, 'Tabs require JavaScript');
+  assert.equal(await page.locator('#skills .comparison-robot:visible').count(), 4, 'All robots must be readable without JavaScript');
+  assert.equal(await page.locator('#refinement .refinement-row:visible').count(), 2);
+  assert.equal(await page.locator('#skills video').count(), 16);
+  assert.equal(await page.locator('#refinement video').count(), 4);
+  for (const robot of manifest.robots) {
+    const panel = page.locator(`#robot-panel-${robot.id}`);
+    const taskId = await panel.locator('.comparison-skill').getAttribute('data-task');
+    const task = manifest.tasks.find(task => task.id === taskId && task.robot === robot.id);
+    assert(task, 'Static panel must describe a real task for its robot');
+    assert.equal(await panel.locator('.task-prompt').textContent(), `Task: ${task.prompt}`);
+    assert.equal(await panel.locator('.robot-heading').textContent(), robot.label);
+    const videos = await panel.locator('video').evaluateAll(nodes => nodes.map(node => ({ src: node.getAttribute('src'), poster: node.getAttribute('poster'), controls: node.controls })));
+    Object.keys({ gpt: 0, eureka: 0, oneshot: 0, ours: 0 }).forEach((method, i) => {
+      const asset = task.methods[method].preview || task.methods[method];
+      assert.deepEqual(videos[i], { src: asset.src, poster: asset.poster, controls: true });
+    });
+  }
+  assert(await page.locator('video').evaluateAll(nodes => nodes.every(node => node.getAttribute('src') && node.getAttribute('poster'))), 'Every video needs an initial source and poster');
+  assert.equal(await page.locator('.video-expand:visible, .playback-toolbar:visible').count(), 0, 'Hide script-only controls without JavaScript');
+  await assertNoOverflow(page, 'Static mobile page');
+  await page.close();
+}
+
 async function exerciseComparison(page) {
   const manifest = await page.evaluate(async () => (await fetch('assets/media.json')).json());
   const expectedTasks = { go2: 'bend', microduck: 'microduck_curious_look', ostrich: 'ostrich_walk_happy', gorilla: 'gorilla_handstand' };
@@ -378,6 +414,8 @@ try {
   await mkdir(artifacts, { recursive: true });
   const origin = await startServer();
   browser = await chromium.launch({ executablePath, headless: true, args: ['--no-sandbox'] });
+  await checkStaticDemos(origin);
+  console.log('PASS without JavaScript: paper title, site identity, canonical URL, all robot tasks, video sources and posters');
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
   desktop.setDefaultTimeout(15000);
   watchPage(desktop, origin);
